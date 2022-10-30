@@ -22,18 +22,25 @@ const galleryImage = galleryItems.map(({ preview, description, original }) =>
 gallery.insertAdjacentHTML("beforeend", galleryImage.join(""));
 gallery.addEventListener("click", onClick);
 
-// console.log(basicLightbox);
-
 function onClick(event) {
     event.preventDefault();
     if (event.target.classList.contains("gallery__image")) {
         const LargeImage = event.target.dataset.source;
-        // console.log(LargeImage);
-
         const instance = basicLightbox.create(
             `<img src="${LargeImage}" width="800" height="600">`);
-
         instance.show();
+
+    if (instance.show()) {
+        document.addEventListener("keydown", onKey);
+        function onKey(event) {
+            // console.log(event);
+    if (event.code === "Escape") {
+        instance.close();
+        document.removeEventListener("keydown", onKey);
+            }
+        }}
     }
 }
+
+
 
